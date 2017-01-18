@@ -27,7 +27,7 @@
  * https://github.com/euler-projects/euler-framework
  * http://cfrost.net
  */
-package net.eulerframework.cache.inMemoryCache;
+package net.eulerframework.cache.inMemoryCache.custom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import net.eulerframework.cache.inMemoryCache.DefaultObjectCache;
 
 /**
  * 带有模糊查询功能的对象缓存,缓存键值必须为<code>String</code>类型
@@ -50,7 +52,7 @@ public class FuzzyObjectCache<DATA_T> extends DefaultObjectCache<String, DATA_T>
     /**
      * 新建缓存对象,默认数据生命周期为0s
      */
-    protected FuzzyObjectCache() {
+    public FuzzyObjectCache() {
         super();
     }
 
@@ -58,7 +60,7 @@ public class FuzzyObjectCache<DATA_T> extends DefaultObjectCache<String, DATA_T>
      * 新建缓存对象并指定数据生命周期
      * @param dataLife 数据生命周期,单位:毫秒,设为<code>&lt;=0</code>的值表示禁用缓存
      */
-    protected FuzzyObjectCache(long dataLife) {
+    public FuzzyObjectCache(long dataLife) {
         super(dataLife);
     }
 

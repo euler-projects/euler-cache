@@ -32,6 +32,7 @@ package net.eulerframework.cache.inMemoryCache;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -162,4 +163,22 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
      * @return
      */
     public abstract boolean isEnable();
+    
+    protected class DataStore<T> {
+        private final T data;
+        private final long addTime;
+
+        public DataStore(T data) {
+            this.data = data;
+            this.addTime = new Date().getTime();
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public long getAddTime() {
+            return addTime;
+        }
+    }
 }
