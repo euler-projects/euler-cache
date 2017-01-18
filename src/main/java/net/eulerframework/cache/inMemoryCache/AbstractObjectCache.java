@@ -27,7 +27,7 @@
  * https://github.com/euler-projects/euler-framework
  * http://cfrost.net
  */
-package net.eulerframework.cache;
+package net.eulerframework.cache.inMemoryCache;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
