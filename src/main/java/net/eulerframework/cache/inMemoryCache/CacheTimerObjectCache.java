@@ -27,7 +27,7 @@
  * https://github.com/euler-projects/euler-framework
  * http://cfrost.net
  */
-package net.eulerframework.cache;
+package net.eulerframework.cache.inMemoryCache;
 
 /**
  * Created by cFrost on 16/10/17.
