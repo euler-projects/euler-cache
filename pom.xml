@@ -10,7 +10,7 @@
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>
@@ -44,9 +44,9 @@
     </build>
 
     <scm>
-        <connection>scm:git:https://github.com/euler-projects/euler-framework.git</connection>
-        <developerConnection>scm:git:git@github.com:euler-projects/euler-framework.git</developerConnection>
-        <url>https://github.com/euler-projects/euler-framework</url>
+        <connection>scm:git:https://github.com/euler-projects/euler-cache.git</connection>
+        <developerConnection>scm:git:git@github.com:euler-projects/euler-cache.git</developerConnection>
+        <url>https://github.com/euler-projects/euler-cache</url>
     </scm>
 
 </project>
