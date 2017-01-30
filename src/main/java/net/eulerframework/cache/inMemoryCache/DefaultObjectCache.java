@@ -24,8 +24,8 @@
  * For more information, please visit the following website
  *
  * https://eulerproject.io
- * https://github.com/euler-projects/euler-framework
- * http://cfrost.net
+ * https://github.com/euler-projects/euler-cache
+ * https://cfrost.net
  */
 package net.eulerframework.cache.inMemoryCache;
 
