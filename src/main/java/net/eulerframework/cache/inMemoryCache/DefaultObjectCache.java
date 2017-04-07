@@ -52,7 +52,7 @@ public class DefaultObjectCache<KEY_T, DATA_T> extends AbstractObjectCache<KEY_T
     }
 
     @Override
-    public boolean isTimeout(DataStore<DATA_T> storedData) {
+    public boolean isExpired(DataStore<DATA_T> storedData) {
         //指定为Long.MAX_VALUE表示数据永不过期
         if(this.dataLife == Long.MAX_VALUE ) 
             return false;

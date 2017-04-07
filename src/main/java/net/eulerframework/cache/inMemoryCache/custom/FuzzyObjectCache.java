@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.eulerframework.cache.inMemoryCache.DataNotFoundException;
 import net.eulerframework.cache.inMemoryCache.DefaultObjectCache;
 
 /**
@@ -88,8 +89,10 @@ public class FuzzyObjectCache<DATA_T> extends DefaultObjectCache<String, DATA_T>
     public List<DATA_T> getAll(Set<String> keySet) {
         List<DATA_T> result = new ArrayList<>();
         for(String key : keySet) {
-            DATA_T data = super.get(key);
-            if(data == null){
+            DATA_T data;
+            try {
+                data = super.get(key);
+            } catch (DataNotFoundException e) {
                 return null;
             }
             result.add(data);

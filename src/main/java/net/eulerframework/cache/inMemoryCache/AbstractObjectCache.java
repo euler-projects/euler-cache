@@ -116,7 +116,7 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
         for(KEY_T key : keySet) {
             DataStore<DATA_T> storedData = this.dataMap.get(key);
 
-            if(this.isTimeout(storedData)) {
+            if(this.isExpired(storedData)) {
                 keySetNeedRemove.add(key);
 
                 this.logger.info("Data key = " + key + " was time out and will be removed.");
@@ -132,23 +132,40 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     /**
      * 查询缓存对象
      * @param key 缓存索引键值
-     * @return 缓存对象,未查到或过期返回<code>null</code>
+     * @return 缓存对象
+     * @throws DataNotFoundException 缓存对象不存在或已过期
      */
-    public DATA_T get(KEY_T key) {
-        if(!this.isEnable())
-            return null;
-
+    public DATA_T get(KEY_T key) throws DataNotFoundException {
+        if(!this.isEnable()) {
+            throw new DataNotFoundException();            
+        }
+        
         DataStore<DATA_T> storedData = this.dataMap.get(key);
 
-        if(storedData == null)
-            return null;
+        if(storedData == null) {
+            throw new DataNotFoundException();            
+        }   
 
-        if(this.isTimeout(storedData)) {
+        if(this.isExpired(storedData)) {
             this.remove(key);
-            return null;
+            throw new DataNotFoundException();
         }
 
         return storedData.getData();
+    }
+    
+    public DATA_T get(KEY_T key, DataGetter<KEY_T, DATA_T> dataGetter) {
+        DATA_T data;
+        
+        try {
+            data = this.get(key);
+        } catch (DataNotFoundException e) {
+            // 缓存对象不存在或过期,从实际位置查询
+            data = dataGetter.getData(key);
+            this.put(key, data);
+        }
+        
+        return data;
     }
 
     /**
@@ -156,7 +173,7 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
      * @param storedData
      * @return
      */
-    public abstract boolean isTimeout(DataStore<DATA_T> storedData);
+    public abstract boolean isExpired(DataStore<DATA_T> storedData);
 
     /**
      * 判断缓存是否启用
@@ -180,5 +197,9 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
         public long getAddTime() {
             return addTime;
         }
+    }
+    
+    public interface DataGetter<KEY_T, DATA_T> {
+        public DATA_T getData(KEY_T key);
     }
 }
