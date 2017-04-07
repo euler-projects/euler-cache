@@ -154,6 +154,15 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
         return storedData.getData();
     }
     
+    /**
+     * 查询缓存对象
+     * 
+     * <p>在缓存对象不存在或已过期时,会调用{@link DataGetter#getData(Object)}获取数据,并更新缓存池</p>
+     * 
+     * @param key 缓存对象键值
+     * @param dataGetter 缓存对象不存在或已过期时的数据读取回调
+     * @return 缓存对象
+     */
     public DATA_T get(KEY_T key, DataGetter<KEY_T, DATA_T> dataGetter) {
         DATA_T data;
         
@@ -170,14 +179,14 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
 
     /**
      * 判断缓存对象是否过期
-     * @param storedData
-     * @return
+     * @param storedData 待判断的缓存对象存储类
+     * @return 过期返回{@code true}, 未过期返回{@code false}
      */
     public abstract boolean isExpired(DataStore<DATA_T> storedData);
 
     /**
      * 判断缓存是否启用
-     * @return
+     * @return 启用返回{@code true}, 未启用返回{@code false}
      */
     public abstract boolean isEnable();
     
@@ -200,6 +209,15 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
     
     public interface DataGetter<KEY_T, DATA_T> {
-        public DATA_T getData(KEY_T key);
+        
+        /**
+         * 从数据源读取数据
+         * 
+         * <p>当被查询的缓存对象不存在或已过期时回调用该方法, 该方法中应有真实数据的读取逻辑</p>
+         * 
+         * @param key 缓存对象键值
+         * @return 读取到的最新数据
+         */
+        DATA_T getData(KEY_T key);
     }
 }
