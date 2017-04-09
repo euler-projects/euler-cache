@@ -49,11 +49,10 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     protected ReentrantLock cacheWriteLock = new ReentrantLock();
 
     /**
-     * 向缓存添加缓存对象<br>
-     * 如果缓存已被其他线程锁定,则放弃添加,返回<code>false</code>
+     * 向缓存添加缓存对象,如果缓存已被其他线程锁定,则放弃添加,返回{@code false}
      * @param key 缓存索引键值
      * @param data 缓存对象
-     * @return 成功返回<code>true</code>;失败返回<code>false</code>
+     * @return 成功返回{@code true};失败返回{@code false}
      */
     public boolean put(KEY_T key, DATA_T data) {
         if(!this.isEnable())
@@ -72,10 +71,9 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
 
     /**
-     * 删除缓存对象<br>
-     * 如果缓存已被其他线程锁定,则放弃删除,返回<code>false</code>
+     * 删除缓存对象,如果缓存已被其他线程锁定,则放弃删除,返回{@code false}
      * @param key 缓存索引键值
-     * @return 成功返回<code>true</code>;失败返回<code>false</code>
+     * @return 成功返回{@code true};失败返回{@code false}
      */
     public boolean remove(KEY_T key) {
         if(this.cacheWriteLock.tryLock()) {
@@ -90,9 +88,8 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
 
     /**
-     * 清除所有缓存对象<br>
-     * 如果缓存已被其他线程锁定,则放弃清除,返回<code>false</code>
-     * @return 成功返回<code>true</code>;失败返回<code>false</code>
+     * 清除所有缓存对象,如果缓存已被其他线程锁定,则放弃清除,返回{@code false}
+     * @return 成功返回{@code true};失败返回{@code false}
      */
     public boolean clear() {
         if(this.cacheWriteLock.tryLock()) {
@@ -107,8 +104,7 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
 
     /**
-     * 清理缓存<br>
-     * 尝试删除所有过期缓存对象
+     * 清理缓存,尝试删除所有过期缓存对象
      */
     public void clean() {
         Set<KEY_T> keySet = this.dataMap.keySet();

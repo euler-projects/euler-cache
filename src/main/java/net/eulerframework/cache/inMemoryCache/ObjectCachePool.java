@@ -64,7 +64,7 @@ public class ObjectCachePool {
     }
 
     /**
-     * 见一个对象缓存从缓存池移除
+     * 将一个对象缓存从缓存池移除
      * 
      * @param cache
      */
