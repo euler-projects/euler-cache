@@ -24,8 +24,8 @@
  * For more information, please visit the following website
  *
  * https://eulerproject.io
- * https://github.com/euler-projects/euler-framework
- * http://cfrost.net
+ * https://github.com/euler-projects/euler-cache
+ * https://cfrost.net
  */
 package net.eulerframework.cache.inMemoryCache;
 
@@ -48,7 +48,7 @@ public class CacheTimerObjectCache<KEY_T, DATA_T> extends AbstractObjectCache<KE
     }
 
     @Override
-    public boolean isTimeout(DataStore<DATA_T> storedData) {
+    public boolean isExpired(DataStore<DATA_T> storedData) {
         if(storedData == null) {
             return true;
         }

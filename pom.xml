@@ -6,11 +6,11 @@
         <groupId>net.eulerframework</groupId>
         <artifactId>euler-parent</artifactId>
         <version>1</version>
-        <relativePath></relativePath>
+        <relativePath/>
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>

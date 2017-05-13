@@ -24,8 +24,8 @@
  * For more information, please visit the following website
  *
  * https://eulerproject.io
- * https://github.com/euler-projects/euler-framework
- * http://cfrost.net
+ * https://github.com/euler-projects/euler-cache
+ * https://cfrost.net
  */
 package net.eulerframework.cache.inMemoryCache;
 
@@ -49,11 +49,10 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     protected ReentrantLock cacheWriteLock = new ReentrantLock();
 
     /**
-     * 向缓存添加缓存对象<br>
-     * 如果缓存已被其他线程锁定,则放弃添加,返回<code>false</code>
+     * 向缓存添加缓存对象,如果缓存已被其他线程锁定,则放弃添加,返回{@code false}
      * @param key 缓存索引键值
      * @param data 缓存对象
-     * @return 成功返回<code>true</code>;失败返回<code>false</code>
+     * @return 成功返回{@code true};失败返回{@code false}
      */
     public boolean put(KEY_T key, DATA_T data) {
         if(!this.isEnable())
@@ -72,10 +71,9 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
 
     /**
-     * 删除缓存对象<br>
-     * 如果缓存已被其他线程锁定,则放弃删除,返回<code>false</code>
+     * 删除缓存对象,如果缓存已被其他线程锁定,则放弃删除,返回{@code false}
      * @param key 缓存索引键值
-     * @return 成功返回<code>true</code>;失败返回<code>false</code>
+     * @return 成功返回{@code true};失败返回{@code false}
      */
     public boolean remove(KEY_T key) {
         if(this.cacheWriteLock.tryLock()) {
@@ -90,9 +88,8 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
 
     /**
-     * 清除所有缓存对象<br>
-     * 如果缓存已被其他线程锁定,则放弃清除,返回<code>false</code>
-     * @return 成功返回<code>true</code>;失败返回<code>false</code>
+     * 清除所有缓存对象,如果缓存已被其他线程锁定,则放弃清除,返回{@code false}
+     * @return 成功返回{@code true};失败返回{@code false}
      */
     public boolean clear() {
         if(this.cacheWriteLock.tryLock()) {
@@ -107,8 +104,7 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     }
 
     /**
-     * 清理缓存<br>
-     * 尝试删除所有过期缓存对象
+     * 清理缓存,尝试删除所有过期缓存对象
      */
     public void clean() {
         Set<KEY_T> keySet = this.dataMap.keySet();
@@ -116,7 +112,7 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
         for(KEY_T key : keySet) {
             DataStore<DATA_T> storedData = this.dataMap.get(key);
 
-            if(this.isTimeout(storedData)) {
+            if(this.isExpired(storedData)) {
                 keySetNeedRemove.add(key);
 
                 this.logger.info("Data key = " + key + " was time out and will be removed.");
@@ -132,35 +128,61 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
     /**
      * 查询缓存对象
      * @param key 缓存索引键值
-     * @return 缓存对象,未查到或过期返回<code>null</code>
+     * @return 缓存对象
+     * @throws DataNotFoundException 缓存对象不存在或已过期
      */
-    public DATA_T get(KEY_T key) {
-        if(!this.isEnable())
-            return null;
-
+    public DATA_T get(KEY_T key) throws DataNotFoundException {
+        if(!this.isEnable()) {
+            throw new DataNotFoundException();            
+        }
+        
         DataStore<DATA_T> storedData = this.dataMap.get(key);
 
-        if(storedData == null)
-            return null;
+        if(storedData == null) {
+            throw new DataNotFoundException();            
+        }   
 
-        if(this.isTimeout(storedData)) {
+        if(this.isExpired(storedData)) {
             this.remove(key);
-            return null;
+            throw new DataNotFoundException();
         }
 
         return storedData.getData();
     }
+    
+    /**
+     * 查询缓存对象
+     * 
+     * <p>在缓存对象不存在或已过期时,会调用{@link DataGetter#getData(Object)}获取数据,并更新缓存池</p>
+     * 
+     * @param key 缓存对象键值
+     * @param dataGetter 缓存对象不存在或已过期时的数据读取回调
+     * @return 缓存对象
+     */
+    public DATA_T get(KEY_T key, DataGetter<KEY_T, DATA_T> dataGetter) {
+        DATA_T data;
+        
+        try {
+            data = this.get(key);
+        } catch (DataNotFoundException e) {
+            // 缓存对象不存在或过期,从实际位置查询
+            data = dataGetter.getData(key);
+            this.put(key, data);
+        }
+        
+        return data;
+    }
 
     /**
      * 判断缓存对象是否过期
-     * @param storedData
-     * @return
+     * @param storedData 待判断的缓存对象存储类
+     * @return 过期返回{@code true}, 未过期返回{@code false}
      */
-    public abstract boolean isTimeout(DataStore<DATA_T> storedData);
+    public abstract boolean isExpired(DataStore<DATA_T> storedData);
 
     /**
      * 判断缓存是否启用
-     * @return
+     * @return 启用返回{@code true}, 未启用返回{@code false}
      */
     public abstract boolean isEnable();
     
@@ -180,5 +202,18 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> {
         public long getAddTime() {
             return addTime;
         }
+    }
+    
+    public interface DataGetter<KEY_T, DATA_T> {
+        
+        /**
+         * 从数据源读取数据
+         * 
+         * <p>当被查询的缓存对象不存在或已过期时回调用该方法, 该方法中应有真实数据的读取逻辑</p>
+         * 
+         * @param key 缓存对象键值
+         * @return 读取到的最新数据
+         */
+        DATA_T getData(KEY_T key);
     }
 }
