@@ -29,8 +29,6 @@
  */
 package net.eulerframework.cache.inMemoryCache;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -38,12 +36,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
+import net.eulerframework.common.base.log.LogSupport;
+
 /**
  * Created by cFrost on 16/10/17.
  */
-public abstract class AbstractObjectCache<KEY_T, DATA_T> {
-    protected Logger logger = LogManager.getLogger(this.getClass());
-
+public abstract class AbstractObjectCache<KEY_T, DATA_T> extends LogSupport {
     protected final HashMap<KEY_T, DataStore<DATA_T>> dataMap = new HashMap<>();
 
     protected ReentrantLock cacheWriteLock = new ReentrantLock();
