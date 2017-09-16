@@ -59,6 +59,9 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> extends LogSupport {
         if(this.cacheWriteLock.tryLock()) {
             try {
                 this.dataMap.put(key, new DataStore<DATA_T>(data));
+                if(this.logger.isDebugEnabled()) {
+                    this.logger.debug("Data key '" + key + "' has been added to cache.");
+                }
                 return true;
             } finally {
                 this.cacheWriteLock.unlock();
@@ -112,8 +115,9 @@ public abstract class AbstractObjectCache<KEY_T, DATA_T> extends LogSupport {
 
             if(this.isExpired(storedData)) {
                 keySetNeedRemove.add(key);
-
-                this.logger.info("Data key = " + key + " was time out and will be removed.");
+                if(this.logger.isDebugEnabled()) {
+                    this.logger.debug("Data key '" + key + "' was time out and will be removed.");
+                }
 
             }
         }
