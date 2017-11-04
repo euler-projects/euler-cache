@@ -5,27 +5,27 @@
     <parent>
         <groupId>net.eulerframework</groupId>
         <artifactId>euler-parent</artifactId>
-        <version>1</version>
+        <version>2</version>
         <relativePath/>
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>
 
     <properties>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         
-        <log4j.version>2.5</log4j.version>
+        <euler-common.version>0.0.4-SNAPSHOT</euler-common.version>
     </properties>
      
     <dependencies>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>net.eulerframework</groupId>
+            <artifactId>euler-common-logging</artifactId>
+            <version>${euler-common.version}</version>
         </dependency>
     </dependencies>
 
