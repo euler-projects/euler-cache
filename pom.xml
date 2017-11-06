@@ -10,7 +10,7 @@
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>
@@ -18,7 +18,7 @@
     <properties>
         <jdk.version>1.8</jdk.version>
         
-        <euler-common.version>0.0.4-SNAPSHOT</euler-common.version>
+        <euler-common.version>0.0.4</euler-common.version>
     </properties>
      
     <dependencies>
