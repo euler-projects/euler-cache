@@ -1,6 +1,5 @@
 package net.eulerframework.cache.inMemoryCache;
 
-@SuppressWarnings("serial")
 public class DataNotFoundException extends Exception {
 
     public DataNotFoundException(){
