@@ -5,20 +5,19 @@
     <parent>
         <groupId>net.eulerframework</groupId>
         <artifactId>euler-parent</artifactId>
-        <version>2</version>
+        <version>3</version>
         <relativePath/>
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>0.0.6</version>
+    <version>1.0.0.M1</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>
 
     <properties>
-        <jdk.version>1.8</jdk.version>
-        
-        <euler-common.version>0.0.4</euler-common.version>
+        <jdk.version>1.7</jdk.version>
+        <euler-common.version>1.0.0.M2-SNAPSHOT</euler-common.version>
     </properties>
      
     <dependencies>
