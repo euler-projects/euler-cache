@@ -1,4 +1,4 @@
-[![Build Status](https://ci.eulerproject.io/job/euler-cache-latest-jdk7/badge/icon)](https://ci.eulerproject.io/job/euler-cache-latest-jdk7)
+[![Build Status](https://ci.eulerproject.io/job/euler-cache-latest-jdk8/badge/icon)](https://ci.eulerproject.io/job/euler-cache-latest-jdk8)
 [![GitHub issues](https://img.shields.io/github/issues/euler-projects/euler-cache.svg)](https://github.com/euler-projects/euler-cache/issues)
 [![GitHub release](https://img.shields.io/github/release/euler-projects/euler-cache.svg)](https://github.com/euler-projects/euler-cache/releases)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.eulerframework/euler-cache/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.eulerframework/euler-cache)
