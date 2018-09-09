@@ -17,7 +17,7 @@
 
     <properties>
         <jdk.version>1.7</jdk.version>
-        <euler-common.version>1.0.0.M2-SNAPSHOT</euler-common.version>
+        <euler-common.version>1.0.0.M1</euler-common.version>
     </properties>
      
     <dependencies>
