@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>net.eulerframework</groupId>
+        <groupId>org.eulerframework</groupId>
         <artifactId>euler-parent</artifactId>
-        <version>4-SNAPSHOT</version>
+        <version>4</version>
         <relativePath/>
     </parent>
     
@@ -21,7 +21,7 @@
      
     <dependencies>
         <dependency>
-            <groupId>net.eulerframework</groupId>
+            <groupId>org.eulerframework</groupId>
             <artifactId>euler-common-logging</artifactId>
             <version>${euler-common.version}</version>
         </dependency>
