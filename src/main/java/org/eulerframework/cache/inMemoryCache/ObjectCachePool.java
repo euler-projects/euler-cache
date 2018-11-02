@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.eulerframework.cache.inMemoryCache;
+package org.eulerframework.cache.inMemoryCache;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.eulerframework.cache.inMemoryCache.CacheTimerObjectCache.CacheTimer;
+import org.eulerframework.cache.inMemoryCache.CacheTimerObjectCache.CacheTimer;
 
 /**
  * Created by cFrost on 16/10/17.

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.eulerframework.cache.inMemoryCache;
+package org.eulerframework.cache.inMemoryCache;
 
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
-import net.eulerframework.common.base.log.LogSupport;
+import org.eulerframework.common.base.log.LogSupport;
 
 /**
  * Created by cFrost on 16/10/17.
