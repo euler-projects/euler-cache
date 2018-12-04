@@ -10,13 +10,13 @@
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>1.0.0.M2</version>
+    <version>1.0.0.M3-SNAPSHOT</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>
 
     <properties>
-        <euler-common.version>1.0.0.M2</euler-common.version>
+        <euler-common.version>1.0.0.M3-SNAPSHOT</euler-common.version>
     </properties>
      
     <dependencies>
