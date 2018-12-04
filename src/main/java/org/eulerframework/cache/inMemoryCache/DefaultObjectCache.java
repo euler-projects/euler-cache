@@ -13,41 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.eulerframework.cache.inMemoryCache;
+package org.eulerframework.cache.inMemoryCache;
+
+import java.util.Date;
 
 /**
+ * 预先指定数据生命周期的对象缓存
+ * 
+ * <p>如果把生命周期指定为{@link Long#MAX_VALUE}表示缓存永不过期</p>
+ * 
  * Created by cFrost on 16/10/17.
  */
-public class CacheTimerObjectCache<KEY_T, DATA_T> extends AbstractObjectCache<KEY_T, DATA_T> {
+public class DefaultObjectCache<KEY_T, DATA_T> extends AbstractObjectCache<KEY_T, DATA_T> {
 
-    protected CacheTimer<DATA_T> cahceTimer;
+    protected long dataLife;
 
-    public void setCahceTimer(CacheTimer<DATA_T> cahceTimer) {
-        this.cahceTimer = cahceTimer;
+    public void setDataLife(long dataLife) {
+        this.dataLife = dataLife;
     }
 
-    protected CacheTimerObjectCache() {
+    protected DefaultObjectCache() {
     }
 
-    protected CacheTimerObjectCache(CacheTimer<DATA_T> cahceTimer) {
-        this.cahceTimer = cahceTimer;
+    protected DefaultObjectCache(long dataLife) {
+        this.dataLife = dataLife;
     }
 
     @Override
     public boolean isExpired(DataStore<DATA_T> storedData) {
-        if(storedData == null) {
+        //指定为Long.MAX_VALUE表示数据永不过期
+        if(this.dataLife == Long.MAX_VALUE ) 
+            return false;
+        
+        if(storedData == null || new Date().getTime() - storedData.getAddTime() >= this.dataLife) {
             return true;
         }
 
-        return this.cahceTimer.isTimeout(storedData.getData(), storedData.getAddTime());
+        return false;
     }
 
     @Override
     public boolean isEnable() {
-        return this.cahceTimer == null ? false : true;
-    }
-
-    public interface CacheTimer<T> {
-        boolean isTimeout(T data, long addTime);
+        return this.dataLife > 0 ? true : false;
     }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.eulerframework.cache.inMemoryCache.custom;
+package org.eulerframework.cache.inMemoryCache.custom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.eulerframework.cache.inMemoryCache.DataNotFoundException;
-import net.eulerframework.cache.inMemoryCache.DefaultObjectCache;
+import org.eulerframework.cache.inMemoryCache.DataNotFoundException;
+import org.eulerframework.cache.inMemoryCache.DefaultObjectCache;
 
 /**
  * 带有模糊查询功能的对象缓存,缓存键值必须为<code>String</code>类型
