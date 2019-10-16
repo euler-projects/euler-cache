@@ -5,18 +5,21 @@
     <parent>
         <groupId>org.eulerframework</groupId>
         <artifactId>euler-parent</artifactId>
-        <version>4</version>
+        <version>5-SNAPSHOT</version>
         <relativePath/>
     </parent>
     
     <artifactId>euler-cache</artifactId>
-    <version>1.0.0.M3-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>euler-cache</name>
     <url>https://eulerproject.io</url>
     <description>In Memory Object Cache</description>
 
     <properties>
-        <euler-common.version>1.0.0.M3-SNAPSHOT</euler-common.version>
+        <revision>1.0.0.M7-SNAPSHOT</revision>
+        <main.basedir>${basedir}</main.basedir>
+
+        <euler-common.version>1.0.0.M7-SNAPSHOT</euler-common.version>
     </properties>
      
     <dependencies>
@@ -27,10 +30,58 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <!-- Tidy up all POMs before they are published -->
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>oss</flattenMode>
+                            <pomElements>
+                                <distributionManagement>remove</distributionManagement>
+                                <repositories>remove</repositories>
+                            </pomElements>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <scm>
         <connection>scm:git:https://github.com/euler-projects/euler-cache.git</connection>
         <developerConnection>scm:git:git@github.com:euler-projects/euler-cache.git</developerConnection>
         <url>https://github.com/euler-projects/euler-cache</url>
     </scm>
 
+    <repositories>
+        <repository>
+            <id>euler-repo-maven-snapshots</id>
+            <name>Snapshot Repository for Euler Projects</name>
+            <url>https://repo.eulerproject.io/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
